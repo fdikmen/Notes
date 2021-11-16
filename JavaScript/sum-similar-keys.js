@@ -1,3 +1,5 @@
+//Sum similar keys in an array of objects
+
 var firstObj = [
     { 'unit': 'U1', 'price': 50 },
     { 'unit': 'U1', 'price': 50 },
@@ -22,4 +24,4 @@ for (var prop in holder) {
   lastObj.push({ unit: prop, price: holder[prop] });
 }
 
-console.log(lastObj);
+console.log(firstObj,lastObj);
