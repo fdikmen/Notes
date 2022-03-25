@@ -1005,12 +1005,19 @@ margin-bottom:10px;
 		var boxQuantity = productDesc.split("[")[1].split("x")[0].match(/\d+/)[0]
 		var ItemInBoxUnitPrice = (unitPrice / boxQuantity).toFixed(2); //Birim fiyati hesapla
                 var aantal = unitQuantity * boxQuantity // aantal i hesapla
+		    
+		    window.onload = function () //jquery metodlarını sayfa yuklenince calistir
+				{
+				  if (typeof boxQuantity !== "undefined") {
+				    $("#spnItemInBoxUnitPrice").text(ItemInBoxUnitPrice);
+				    $("#spnAantal").text(aantal);
+				  } else //Eğer sayı gelmezse o halde kutulu bir ürün değildir, 4.sütunu gizle
+				  {
+				    $("th:nth-child(4)").hide();
+				    $("td:nth-child(4)").hide();
+				  }
+				};
 
-                window.onload = function () //jquery metodlarını sayfa yuklenince calistir
-                {
-                    $("#spnItemInBoxUnitPrice").text(ItemInBoxUnitPrice)
-                    $("#spnAantal").text(aantal)
-                };
             </script>
 			 <span id="spnItemInBoxUnitPrice">-</span>
 		</td>
