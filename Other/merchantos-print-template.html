@@ -999,9 +999,11 @@ margin-bottom:10px;
                 var unitPrice = "{{Line.unitPrice}}" //Fiyat al
                 var unitQuantity = "{{Line.unitQuantity}}" // Miktar Al
                 var productDesc = "{{Line.Item.description }}" // Urun adini al
-                var boxQuantity = productDesc.split(" X (")[0].match(/\d+/)[0] //Urun adından kutu ici miktari cikar
+                //var boxQuantity = productDesc.split(" X (")[0].match(/\d+/)[0] //Urun adından kutu ici miktari cikar
                 // match(/\d+/)[0] : bir string deki sayilari bulur
-                var ItemInBoxUnitPrice = (unitPrice / boxQuantity).toFixed(2); //Birim fiyati hesapla
+                // Yeni Sistem İçin AltSatır Örn:Neutral Afwasmiddel Hand Dishwash [6x500 ml]
+		var boxQuantity = productDesc.split("[")[1].split("x")[0].match(/\d+/)[0]
+		var ItemInBoxUnitPrice = (unitPrice / boxQuantity).toFixed(2); //Birim fiyati hesapla
                 var aantal = unitQuantity * boxQuantity // aantal i hesapla
 
                 window.onload = function () //jquery metodlarını sayfa yuklenince calistir
