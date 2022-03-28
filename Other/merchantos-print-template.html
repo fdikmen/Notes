@@ -610,7 +610,7 @@
     
         {% if not parameters.page or parameters.page == 2 or not page_loaded %}
         <script>
-            var arryx = []; var countTest = 0;
+            var invoiceItems = [];
         </script>
         <!-- replace.email_custom_header_msg -->
         <div class="bgreceipt">
@@ -1016,14 +1016,13 @@
                     var ItemInBoxUnitPrice = (unitPrice / boxQuantity).toFixed(2); //Birim fiyati hesapla
                     var aantal = unitQuantity * boxQuantity // aantal i hesapla 
                     
-                    arryx.push({title:productDesc,rowId:"#row_" + itemID,boxQuantity,ItemInBoxUnitPrice,aantal });
+                    invoiceItems.push({title:productDesc,rowId:"#row_" + itemID,boxQuantity,ItemInBoxUnitPrice,aantal });
                     
-                    countTest=countTest+1;
                     window.onload = function () //jquery metodlarını sayfa yuklenince calistir
                     {
-                        arryx.map(function(item, index)
+                        invoiceItems.map(function(item, index)
                          { 
-                             var numRow=index+1;
+                             var numRow=index+1;//Eğer rakam tek haneli ise 2ye tamamlamak için
                              numRow = numRow<10 ? "0"+numRow : numRow;
                             $(item.rowId + " .spnItemInBoxUnitPrice").text(item.ItemInBoxUnitPrice);
                             $(item.rowId + " .spnAantal").text(item.aantal);
