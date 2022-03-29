@@ -996,8 +996,7 @@
            
             {% macro line(isTaxInclusive,Line,parameters,options) %}
     
-            <script>
-    
+            <script>    
                 try {
                     var itemID = "{{Line.Item.itemID }}"
                     //var testObj2 = "{{Line.Item.Prices.ItemPrice }}"
@@ -1036,7 +1035,7 @@
             </script>
             <tr id="row_{{Line.Item.itemID }}">
                 <td class="rowNum"></td>
-                <td data-automation="lineItemDescription" class="description">
+                <td data-automation="lineItemDescription" class="description descriptionCol">
                     {{ _self.lineDescription(Line,options) }}
                     {% if options.per_line_discount == true and not parameters.gift_receipt %}
                     {% if Line.calcLineDiscount > 0 %}
@@ -1048,26 +1047,26 @@
                 </td>
     
                 {% if options.show_custom_sku and Line.Item.customSku %}
-                <td class="custom_field">{{ Line.Item.customSku }}</td>
+                <td class="custom_field artikelnummerCol">{{ Line.Item.customSku }}</td>
                 {% endif %}
                 {% if options.show_manufacturer_sku and Line.Item.manufacturerSku %}
-                <td class="custom_field">{{ Line.Item.manufacturerSku }}</td>
+                <td class="custom_field artikelnummerFabrCol">{{ Line.Item.manufacturerSku }}</td>
                 {% endif %}
     
                 {% if options.show_msrp == true and not parameters.gift_receipt %}
                 {% set msrp_printed = false %}
                 {% for price in Line.Item.Prices.ItemPrice if not msrp_printed %}
                 {% if price.useType == "MSRP" and price.amount != "0"%}
-                <td class="custom_field">{{ price.amount }}</td>
+                <td class="custom_field manufacturerSkuCol">{{ price.amount }}</td>
                 {% set msrp_printed = true %}
                 {% endif %}
-                {% endfor %}
-                {% if not msrp_printed %}
-                <td class="custom_field">N.v.t.</td>
-                {% endif %}
+                    {% endfor %}
+                    {% if not msrp_printed %}
+                    <td class="custom_field AdviesprijsCol">N.v.t.</td>
+                    {% endif %}
                 {% endif %}
     
-                <td data-automation="lineItemQuantity" class="quantity">
+                <td data-automation="lineItemQuantity" class="quantity AantalCol">
                     {% if options.per_line_subtotal and options.discounted_line_items and Line.calcLineDiscount != 0 and not
                     parameters.gift_receipt %}
                     <span class="strike">{{Line.unitQuantity}} x {{Line.displayableUnitPrice}}</span>
@@ -1075,11 +1074,12 @@
                     <!-- {{Line.unitQuantity}} -->
                     <span class="spnAantal">-</span>
                 </td>
-                <td data-automation="lineItemPrice" class="amount" style="text-align: center;">
+                
+                {% if not parameters.gift_receipt %}
+                <td data-automation="lineItemPrice" class="amount UnitPrijsCol" style="text-align: center;">
                     <span class="spnItemInBoxUnitPrice">-</span>
                 </td>
-                {% if not parameters.gift_receipt %}
-                <td data-automation="lineItemQuantity" class="quantity" style="display:none;">
+                <td data-automation="lineItemQuantity" class="quantity epCol" style="display:none;">
                     {% if options.per_line_subtotal and options.discounted_line_items and Line.calcLineDiscount != 0 and not
                     parameters.gift_receipt %}
                     <span class="strike">{{Line.unitQuantity}} x {{Line.displayableUnitPrice}}</span>
@@ -1094,8 +1094,8 @@
                     {% endif %}
                     {% endif %}
                 </td>
-    
-                <td data-automation="lineItemPrice" class="amount">
+                
+                <td data-automation="lineItemPrice" class="amount PrijsCol">
     
                     {% if options.discounted_line_items and not options.per_line_subtotal and Line.calcLineDiscount != 0 %}
                     {% if not isTaxInclusive or isTaxInclusive == 'false' %}
@@ -1113,32 +1113,28 @@
             {% macro receipt(Sale,parameters,store_copy,options) %}
             {% if Sale.SaleLines %}
             <table class="sale lines zebra">
+                <thead>
                 <tr class="thbckcolor">
-                    <th>#</th>
-                    <th class="description">Product Naam/Beschrijvening</th>
-    
+                    <th style="text-align: center;">#</th>
+                    <th class="description descriptionCol">Product Naam/Beschrijvening</th>    
                     {% if options.show_custom_sku and options.show_manufacturer_sku %}
-                    <th class="custom_field">Aangepaste artikelnummer</th>
-                    <th class="custom_field">Artikelnummer fabr.</th>
+                    <th class="custom_field artikelnummerCol">Aangepaste artikelnummer</th>
+                    <th class="custom_field artikelnummerFabrCol">Artikelnummer fabr.</th>
                     {% elseif options.show_custom_sku or options.show_manufacturer_sku %}
-                    <th class="custom_field">Artikelnummer</th>
-                    {% endif %}
-    
+                    <th class="custom_field manufacturerSkuCol">Artikelnummer</th>
+                    {% endif %}    
                     {% if options.show_msrp and not parameters.gift_receipt %}
-                    <th class="custom_field">Adviesprijs</th>
-                    {% endif %}
-    
-                    <th class="quantity">Aantal </th>
+                    <th class="custom_field AdviesprijsCol">Adviesprijs</th>
+                    {% endif %}    
+                    <th class="quantity AantalCol">Aantal </th>
                     {% if not parameters.gift_receipt %}
-                    <th class="custom_field" style="text-align: center;">Unit Prijs</th>
-    
-                    <th class="quantity" style=" display: none;">EP </th>
-    
-                    <th class="amount">Prijs</th>
+                    <th class="custom_field UnitPrijsCol" style="text-align: center;">Unit Prijs</th>    
+                    <th class="quantity epCol" style=" display: none;">EP </th>    
+                    <th class="amount PrijsCol">Prijs</th>
                     {% endif %}
                 </tr>
-                <tbody>
-    
+                </thead>
+                <tbody>    
                     {% for Line in Sale.SaleLines.SaleLine %}
                     {{ _self.line(Sale.isTaxInclusive,Line,parameters,options) }}
                     {% endfor %}
