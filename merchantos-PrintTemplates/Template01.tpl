@@ -1126,7 +1126,7 @@
                     {% if options.show_msrp and not parameters.gift_receipt %}
                     <th class="custom_field AdviesprijsCol">Adviesprijs</th>
                     {% endif %}    
-                    <th class="quantity AantalCol">Aantal </th>
+                    <th class="quantity AantalCol">Unit Aantal </th>
                     {% if not parameters.gift_receipt %}
                     <th class="custom_field UnitPrijsCol" style="text-align: center;">Unit Prijs</th>    
                     <th class="quantity epCol" style=" display: none;">EP </th>    
@@ -1161,7 +1161,7 @@
                         {% if options.discounted_line_items %}
                             {% if Sale.TaxClassTotals.Tax|length < 1 %}
                             {# Eğer gelen vergi yoksa sıfır yazsın #}
-                            <td>{{0 |money}}</td>
+                            <td>{{Sale.calcTotal |money}}</td>
                             {% endif %}
                             {% for Tax in Sale.TaxClassTotals.Tax %}
                             
@@ -1186,12 +1186,15 @@
                     {% if not options.discounted_line_items and Sale.calcDiscount > 0 %}
                     <tr>
                         <td>Kortingen</td>
-                        <td id="receiptSaleTotalsDiscounts" class="amount">-{{Sale.calcDiscount|money}}</td>
+                        <td id="receiptSaleTotalsDiscounts" class="amount">-{{Sale.calcDiscount|money}}
+                        </td>
                     </tr>
-                    {% elseif not options.discounted_line_items and Sale.calcDiscount < 0 %} <tr>
+                    {% elseif not options.discounted_line_items and Sale.calcDiscount < 0 %} 
+                    <tr>
                         <td>Kortingen</td>
-                        <td id="receiptSaleTotalsDiscounts" class="amount">{{Sale.calcDiscount|getinverse|money}}</td>
-                        </tr>
+                        <td id="receiptSaleTotalsDiscounts" class="amount">{{Sale.calcDiscount|getinverse|money}}
+                        </td>
+                    </tr>
                         {% endif %}
                         {% for Tax in Sale.TaxClassTotals.Tax %}
                         {% if Tax.taxname and Tax.rate > 0 %}
@@ -1204,16 +1207,15 @@
                         <tr>
                             <td data-automation="receiptSaleTotalsTaxName" width="100%">{{Tax.taxname2}}
                                 ({{Tax.subtotal2|money}} @ {{Tax.rate2}}%)</td>
-                            <td data-automation="receiptSaleTotalsTaxValue" class="amount">{{Tax.amount2|money}}</td>
+                            <td data-automation="receiptSaleTotalsTaxValue" class="amount">{{Tax.amount2|money}}
+                            </td>
                         </tr>
                         {% endif %}
                         {% endfor %}
                         {# <tr>
                             <td width="100%" height="10px"></td>
                             <td width="100%">Totaal belasting</td>
-                            <td id="receiptSaleTotalsTax" class="amount">{{Sale.taxTotal|money}}</td>
-    
-    
+                            <td id="receiptSaleTotalsTax" class="amount">{{Sale.taxTotal|money}}</td>  
                         </tr>#}
                         {% set cash_total = 0 %}
                         {% set non_cash_total = 0 %}
@@ -1231,8 +1233,9 @@
                         <tr class="total">
                             <td>TOTAAL </td>
                             <td id="receiptSaleTotalsTotal" style="border-top: 
-    black 2px solid; height:40px;" class="amount">{{Sale.calcTotal|money}}</td>
-                        </tr>
+    black 2px solid; height:40px;" class="amount">{{Sale.calcTotal|money}}
+    </td>
+                    </tr>
                         {% else %}
                         {# <tr class="total">
                             <td>Totaal</td>
