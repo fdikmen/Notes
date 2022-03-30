@@ -1159,24 +1159,29 @@
                         </td>
     
                         {% if options.discounted_line_items %}
-                        {% for Tax in Sale.TaxClassTotals.Tax %}
-                        {% if Tax.taxname and Tax.rate > 0 %}
-                        <td data-automation="receiptSaleTotalsTaxValue" class="amount"> {{Sale.displayableSubtotal |money}}
-                        </td>
-                        {% endif %}
-                        {% if Tax.taxname2 and Tax.rate2 > 0 %}
-                        <td data-automation="receiptSaleTotalsTaxName" width="100%">{{Tax.taxname2}}
-                            ({{Tax.subtotal2|money}} @ {{Tax.rate2}}%)</td>
-                        <td data-automation="receiptSaleTotalsTaxValue" class="amount">{{Tax.amount2|money}}</td>
-                        {% endif %}
-                        {% endfor %}
-    
-    
-    
+                            {% if Sale.TaxClassTotals.Tax|length < 1 %}
+                            {# Eğer gelen vergi yoksa sıfır yazsın #}
+                            <td>{{0 |money}}</td>
+                            {% endif %}
+                            {% for Tax in Sale.TaxClassTotals.Tax %}
+                            
+                       
+                                {% if Tax.taxname and Tax.rate > 0 %}
+                                <td data-automation="receiptSaleTotalsTaxValue" class="amount"> {{Sale.displayableSubtotal |money}}
+                                </td>
+                                {% endif %}
+                                {% if Tax.taxname2 and Tax.rate2 > 0 %}
+                                <td data-automation="receiptSaleTotalsTaxName" width="100%">{{Tax.taxname2}}
+                                    ({{Tax.subtotal2|money}} @ {{Tax.rate2}}%)</td>
+                                <td data-automation="receiptSaleTotalsTaxValue" class="amount">{{Tax.amount2|money}}
+                                </td>
+                                {% endif %}
+                            {% endfor %} 
                         {% else %}
-                        {{Sale.displayableSubtotal|money}} test
-                        {% endif %}
+                        <td>{{Sale.displayableSubtotal|money}}
                         </td>
+                        {% endif %}
+                        
                     </tr>
                     {% if not options.discounted_line_items and Sale.calcDiscount > 0 %}
                     <tr>
