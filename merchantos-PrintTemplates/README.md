@@ -10,3 +10,7 @@ Dokümantasyon; https://retail-support.lightspeedhq.com/hc/en-us/articles/228842
 ## Template01 SS-02
 ![image](https://user-images.githubusercontent.com/8514244/160554755-9d4d803b-4718-4f0e-9c7f-5274513d722a.png)
 
+
+### Dil
+Kullanılan dil python, Django Framework u gibi duruyor. 
+
