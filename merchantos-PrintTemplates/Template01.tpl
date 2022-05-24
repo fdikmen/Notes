@@ -1028,6 +1028,7 @@
                             $(item.rowId + " .spnAantal").text(item.aantal);
                             $(item.rowId + " .rowNum").text(numRow);
                          })
+                         setTotaalExclusiefBTW()
                     };
                 }
                 catch (err) {
@@ -1143,6 +1144,17 @@
             </table>
     
             {% if not parameters.gift_receipt %}
+            <script>    
+                try {                  
+
+                    function setTotaalExclusiefBTW() {
+                        $("#dataTotaalExclusiefBTW").text("{{Sale.displayableSubtotal |money}}");
+                                                        }
+                }
+                catch (err) {
+                    console.log("??", err.message);
+                }
+                </script>
             <table class="saletotals totals">
                 <tbody id="receiptSaleTotals">
     
@@ -1168,7 +1180,8 @@
                             
                        
                                 {% if Tax.taxname and Tax.rate > 0 %}
-                                <td data-automation="receiptSaleTotalsTaxValue" class="amount"> {{Sale.displayableSubtotal |money}}
+                                <td id="dataTotaalExclusiefBTW" data-automation="receiptSaleTotalsTaxValue" class="amount"> 
+                               
                                 </td>
                                 {% endif %}
                                 {% if Tax.taxname2 and Tax.rate2 > 0 %}
