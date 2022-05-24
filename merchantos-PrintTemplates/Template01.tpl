@@ -188,7 +188,7 @@
         }
     
         .bgreceipt {
-        margin: 0 10%;
+        margin: 0 5%;
         position:relative;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -249,7 +249,8 @@
         padding-right: 10px;
         text-align: center;
         }
-    
+        .rowNum  {    width: 30px;
+    text-align: center; }
         table.sale { border-bottom: 1px solid black; margin-bottom:10px;}
     
         table.sale th {
@@ -1030,11 +1031,11 @@
                     };
                 }
                 catch (err) {
-                    console.log("Hata", err.message);
+                    console.log("?", err.message);
                 }
             </script>
             <tr id="row_{{Line.Item.itemID }}">
-                <td class="rowNum"></td>
+                <td class="rowNum"></td>      <td style="width:10px;">-</td> 
                 <td data-automation="lineItemDescription" class="description descriptionCol">
                     {{ _self.lineDescription(Line,options) }}
                     {% if options.per_line_discount == true and not parameters.gift_receipt %}
@@ -1115,8 +1116,8 @@
             <table class="sale lines zebra">
                 <thead>
                 <tr class="thbckcolor">
-                    <th style="text-align: center;">#</th>
-                    <th class="description descriptionCol">Product Naam/Beschrijvening</th>    
+                    <th style="text-align: center;">#</th>                    <th style="text-align: center;"></th>
+                    <th class="description descriptionCol">Product Beschrijving</th>    
                     {% if options.show_custom_sku and options.show_manufacturer_sku %}
                     <th class="custom_field artikelnummerCol">Aangepaste artikelnummer</th>
                     <th class="custom_field artikelnummerFabrCol">Artikelnummer fabr.</th>
@@ -1130,7 +1131,7 @@
                     {% if not parameters.gift_receipt %}
                     <th class="custom_field UnitPrijsCol" style="text-align: center;">Unit Prijs</th>    
                     <th class="quantity epCol" style=" display: none;">EP </th>    
-                    <th class="amount PrijsCol">Prijs</th>
+                    <th class="amount PrijsCol">Totaal</th>
                     {% endif %}
                 </tr>
                 </thead>

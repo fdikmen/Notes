@@ -14,3 +14,10 @@ Dokümantasyon; https://retail-support.lightspeedhq.com/hc/en-us/articles/228842
 ### Dil
 Kullanılan dil python, Django Framework u gibi duruyor. 
 
+### Çalışma
+Bu alana;
+https://us.merchantos.com/ sitesinde Retail(R-Series) kullanıcı girişi yaparak;
+
+Settings>Print Templates>SaleReceipt
+
+alanında değişiklik yaparak ilerledim.
