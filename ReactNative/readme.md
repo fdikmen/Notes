@@ -20,3 +20,11 @@ npx react-native run-ios --simulator="iPhone 15 Pro"
 ```node
 npx react-native run-ios --device="Your Iphone Name"
 ```
+
+- To delete pods in IOS Project (do it in the ios folder with cd ios)
+```bash
+pod deintegrate
+pod cache clean --all
+pod setup
+pod install
+```
