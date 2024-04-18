@@ -28,3 +28,8 @@ pod cache clean --all
 pod setup
 pod install
 ```
+
+- Opening the application in Xcode
+```bash
+xed ios
+```
